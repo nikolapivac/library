@@ -3,7 +3,8 @@ body {
     padding: 0;
     background-color: bisque;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 table, th, td{
@@ -18,4 +19,21 @@ table {
 td {
     padding: 8px;
     text-align: center;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: beige;
+    border-radius: 8px;
+    margin: 8px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+input{
+    margin: 8px;
 }
