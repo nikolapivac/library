@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: bisque;
+    display: flex;
+    justify-content: center;
+}
+
+table, th, td{
+    border: solid 1px black;
+    background-color: white;
+}
+
+table {
+    margin-top: 20px;
+}
+
+td {
+    padding: 8px;
+    text-align: center;
+}
