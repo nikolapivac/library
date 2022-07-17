@@ -10,13 +10,33 @@
         <script src="script.js" async defer></script>
     </head>
     <body>
-        <table class="booklist">
+        <table id="booklist">
             <tr>
                 <th>Title</th>
                 <th>Author</th>
                 <th># of pages</th>
-                <th>Read</th>
+                <th>Options</th>
             </tr>
         </table>
+        <div id='newBtnCont'>
+            <button id='newBtn'>New Book</button>
+        </div>
+        <div id="form">
+            <form id='form' action='/script.js'>
+                <div class="formHead">
+                    <h4>New Book</h4>
+                    <span class="close">&times;</span>
+                </div>
+                <div id='textInput'> 
+                    <p><input type='text' id='title' name='title' placeholder='Title'></p>
+                    <p><input type='text' id='author' name='author' placeholder='Author'></p>
+                    <p><input type='text' id='pages' name='pages' placeholder='Pages'></p>
+                </div>
+                <div id='checkBox'>
+                    <p><label >Read: </label><input type='checkbox' id='read' name='read' value='yes'></p>
+                </div>
+                <button type='submit' form='form' id='addBtn'>Add</button>
+            </form>
+        </div>
     </body>
 </html>

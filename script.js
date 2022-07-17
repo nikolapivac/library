@@ -1,100 +1,91 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read){
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = Boolean(read);
+const form = document.querySelector("form");
+form.style.display = "none";
+
+const addBtn = document.querySelector('#addBtn');
+addBtn.addEventListener('click', addBookToLibrary);
+
+
+const newBtn = document.querySelector("#newBtn");
+newBtn.addEventListener("click", ()=> form.style.display = "block");
+
+const closeForm = document.getElementsByTagName('span')[0];
+closeForm.addEventListener('click', () => form.style.display = 'none');
+
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = form.title.value; 
+        this.author = form.author.value; 
+        this.pages = form.pages.value; 
+        this.read = form.read.checked; 
+    }
 }
 
 function addBookToLibrary(book){
-    myLibrary.push(book);
+    form.style.display = "none";
+    newBook = new Book(title, author, pages, read); 
+    myLibrary.push(newBook); 
+    render();
 }
 
-const book1 = new Book ("The Hobbit", "J.R.R. Tolkien", "237", true);
-addBookToLibrary(book1);
-const book2 = new Book ("Harry Potter & The Prisoner of Azkaban", "J.K. Rowling", "654", false);
-addBookToLibrary(book2);
+function render() {
+    const table = document.getElementById("booklist");
+    const books = document.querySelectorAll('.book');
+    books.forEach(book => table.removeChild(book));
 
-const body = document.querySelector("body");
-const table = document.querySelector("table");
-
-myLibrary.forEach((book)=>{
-    const libraryItem = document.createElement("tr");
-
-    const title = document.createElement("td");
-    title.textContent = `${book.title}`;
-    libraryItem.appendChild(title);
-
-    const author = document.createElement("td");
-    author.textContent = `${book.author}`;
-    libraryItem.appendChild(author);
-
-    const pages = document.createElement("td");
-    pages.textContent = `${book.pages}`;
-    libraryItem.appendChild(pages);
-
-    if(book.read === true){
-        const read = document.createElement("td");
-        read.textContent = "Yes"
-        libraryItem.appendChild(read);
+    for (let i=0; i<myLibrary.length; i++){
+        createBook(myLibrary[i]);
     }
-    else {
-        const read = document.createElement("td");
-        read.textContent = "No"
-        libraryItem.appendChild(read); 
-    }
+}
+
+function createBook(item) {
+    const library = document.querySelector('#booklist');
+    const book = document.createElement('tr');
+    const title = document.createElement('td');
+    const auth = document.createElement('td');
+    const page = document.createElement('td');
+    const remove = document.createElement('button');
+    const read = document.createElement('button');
     
-    table.appendChild(libraryItem);
-})
+    
+    book.classList.add('book');
+    book.setAttribute('id', myLibrary.indexOf(item));
 
-// New Book button 
+    title.textContent = item.title;
+    title.classList.add('title');
+    book.appendChild(title);
 
-const button = document.createElement("button");
-button.classList.add("newbook");
-button.textContent = "New Book";
-body.appendChild(button);
+    auth.textContent = item.author;
+    auth.classList.add('author');
+    book.appendChild(auth);
 
-button.addEventListener("click", () => {
-    const form = document.createElement("form");
+    page.textContent = item.pages;
+    page.classList.add('pages');
+    book.appendChild(page);
 
-    const titleInput = document.createElement("input");
-    titleInput.setAttribute("type", "text");
-    const titleLabel = document.createElement("label");
-    titleLabel.textContent = "Title:";
-    form.appendChild(titleLabel);
-    form.appendChild(titleInput);
+    read.classList.add('readBtn')    
+    book.appendChild(read);
+    if(item.read===false) {
+        read.textContent = 'Not Read';
+        read.style.backgroundColor = "grey"
+    }else {
+        read.textContent = 'Read';
+    }
 
-    const authorInput = document.createElement("input");
-    authorInput.setAttribute("type", "text");
-    const authorLabel = document.createElement("label");
-    authorLabel.textContent = "Author:";
-    form.appendChild(authorLabel);
-    form.appendChild(authorInput);
+    remove.textContent = 'Remove'; 
+    remove.setAttribute('id', 'removeBtn');
+    book.appendChild(remove);
 
-    const pagesInput = document.createElement("input");
-    pagesInput.setAttribute("type", "number");
-    const pagesLabel = document.createElement("label");
-    pagesLabel.textContent = "# of pages:";
-    form.appendChild(pagesLabel);
-    form.appendChild(pagesInput);
+    library.appendChild(book);
 
-    const yes = document.createElement("input");
-    yes.setAttribute("type", "radio");
-    yes.setAttribute("name", "pages");
-    const yesLabel = document.createElement("label");
-    yesLabel.textContent = "Yes";
-    form.appendChild(yesLabel);
-    form.appendChild(yes);
+    remove.addEventListener('click', () => {
+        myLibrary.splice(myLibrary.indexOf(item),1);
+        render();
+    });
 
-    const no = document.createElement("input");
-    no.setAttribute("type", "radio");
-    no.setAttribute("name", "pages");
-    const noLabel = document.createElement("label");
-    noLabel.textContent = "No";
-    form.appendChild(noLabel);
-    form.appendChild(no);
-
-    body.appendChild(form);
-})
-
+    read.addEventListener('click', () => { 
+        item.read = !item.read; 
+        render();
+    }); 
+}

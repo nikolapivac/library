@@ -26,14 +26,15 @@ button {
     background-color: beige;
     border-radius: 8px;
     margin: 8px;
+    cursor: pointer;
 }
 
-form {
+.formHead{
     display: flex;
-    flex-direction: column;
-    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
 }
 
-input{
-    margin: 8px;
+.close{
+    cursor: pointer;
 }
